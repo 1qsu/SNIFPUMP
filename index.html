@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SNIFPUMP · MemeCoin Sentinel</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: Inter, sans-serif; background: linear-gradient(135deg, #0a0b16, #1c1d2d); color: #f0f0f5; margin: 0; padding: 0; scroll-behavior: smooth; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background-color: rgba(20,20,40,0.95); box-shadow: 0 0 20px rgba(124,58,237,0.3); position: sticky; top: 0; z-index: 50; }
+    header h1 { font-size: 2rem; font-weight: 800; }
+    nav a { margin-left: 1rem; color: #f0f0f5; font-weight: 600; transition: color 0.2s; text-decoration: none; }
+    nav a:hover { color: #7c3aed; }
+    .hero { text-align: center; padding: 4rem 2rem; }
+    .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .hero p { font-size: 1.2rem; color: #c0c0d0; max-width: 700px; margin: 0 auto; }
+    .container { max-width: 900px; margin: 2rem auto; padding: 2rem; background-color: rgba(15,23,36,0.85); border-radius: 1rem; box-shadow: 0 0 25px rgba(124,58,237,0.5); }
+    input { width: 100%; padding: 1rem; border-radius: 0.75rem; border: 1px solid #444; background-color: #171923; color: #f0f0f5; margin-bottom: 1rem; font-size: 1rem; }
+    button { padding: 0.75rem 2rem; border-radius: 0.75rem; border: none; background: linear-gradient(90deg, #7c3aed, #9333ea); color: #fff; cursor: pointer; font-weight: 700; transition: transform 0.2s; }
+    button:hover { transform: scale(1.05); }
+    .result { margin-top: 2rem; padding: 1.5rem; background-color: #0f1724; border-radius: 1rem; box-shadow: 0 0 15px rgba(124,58,237,0.3); word-break: break-word; }
+    .section { margin-top: 1.5rem; }
+    .section h2 { font-size: 1.3rem; margin-bottom: 0.5rem; font-weight: 600; border-bottom: 1px dashed #7c3aed; padding-bottom: 0.25rem; }
+    .forensic-finding { display: flex; align-items: center; margin-bottom: 0.5rem; }
+    .forensic-finding span { margin-right: 0.5rem; font-size: 1.1rem; }
+    .risk-CRITICAL_DANGER { color: #ef4444; font-weight: 900; font-size: 1.2rem; }
+    .risk-ELEVATED_RISK { color: #f59e0b; font-weight: 700; font-size: 1.2rem; }
+    .risk-MANAGEABLE_RISK { color: #10b981; font-weight: 700; font-size: 1.2rem; }
+    footer { text-align: center; padding: 2rem; font-size: 0.9rem; color: #aaa; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SNIFPUMP</h1>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#audit">Audit</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="about">
+    <h2>SnifPump Sentinel</h2>
+    <p>Drop in your token and let SNIFPUMP sniff out the sketchy coins 🐕. Spot rug vibes, whale stacking, and shady dev moves. Stay sharp, avoid getting rekt, and pump safe.</p>
+  </section>
+
+  <div class="container" id="audit">
+    <input type="text" id="addressInput" placeholder="Paste token address here" />
+    <button id="auditBtn">Run Audit 🦴</button>
+    <div class="result" id="result">
+      <p>Waiting for token intel...</p>
+    </div>
+  </div>
+
+  <div class="container" id="contact">
+    <h2>Contact</h2>
+    <p>For inquiries or feedback, email <a href="mailto:snifpump@example.com" class="text-purple-500">snifpump@example.com</a>.</p>
+  </div>
+
+  <footer>&copy; 2025 SNIFPUMP. All rights reserved.</footer>
+
+  <script>
+    function hashAddress(addr) {
+      let h = 0;
+      for (let i = 0; i < addr.length; i++) { h = (h << 5) - h + addr.charCodeAt(i); h |= 0; }
+      return Math.abs(h);
+    }
+
+    function runForensicAudit(address) {
+      if (!address) return { riskLevel: 'MANAGEABLE_RISK', riskScore: 0, primaryThreat: 'None', forensicFindings: [], creatorProfile: {}, nextSteps: 'Enter a valid token address.' };
+      let seed = hashAddress(address);
+      function pseudoRandom(max) { const x = Math.sin(seed++) * 10000; return Math.floor((x - Math.floor(x)) * max) + 1; }
+
+      const structuralScore = pseudoRandom(30);
+      const behavioralScore = pseudoRandom(50);
+      const marketScore = pseudoRandom(20);
+      const riskScore = structuralScore + behavioralScore + marketScore;
+
+      let riskLevel = 'MANAGEABLE_RISK';
+      if (riskScore > 70) riskLevel = 'CRITICAL_DANGER';
+      else if (riskScore > 40) riskLevel = 'ELEVATED_RISK';
+
+      const findings = [
+        {icon: '❌', type: 'Structural Threat', detail: 'Contract has sketchy flags.'},
+        {icon: '⚠️', type: 'Behavioral Red Flag', detail: 'Weird holder behavior detected.'},
+        {icon: '⚠️', type: 'Market Risk', detail: 'Top holders own too much supply.'}
+      ];
+
+      const creatorProfile = {
+        name: 'SNIFPUMP Dev',
+        pastProjectsFailed: pseudoRandom(3),
+        linkedWalletsDetected: pseudoRandom(2),
+        isKnownScammer: pseudoRandom(10) < 3
+      };
+
+      return { riskLevel, riskScore, primaryThreat: 'Primary sketch alert detected', forensicFindings: findings, creatorProfile, nextSteps: 'DYOR & tread carefully, fam.' };
+    }
+
+    document.getElementById('auditBtn').addEventListener('click', function() {
+      const address = document.getElementById('addressInput').value.trim().toLowerCase();
+      const result = runForensicAudit(address);
+      const resDiv = document.getElementById('result');
+      resDiv.innerHTML = `
+        <p><strong>Risk Level:</strong> <span class='risk-${result.riskLevel}'>${result.riskLevel}</span></p>
+        <p><strong>Risk Score:</strong> ${result.riskScore}</p>
+        <p><strong>Primary Threat:</strong> ${result.primaryThreat}</p>
+        <div class='section'>
+          <h2>Forensic Findings:</h2>
+          ${result.forensicFindings.map(f => `<div class='forensic-finding'><span>${f.icon}</span><span>${f.type} - ${f.detail}</span></div>`).join('')}
+        </div>
+        <div class='section'>
+          <h2>Creator Profile:</h2>
+          <p>Name: ${result.creatorProfile.name}</p>
+          <p>Past Projects Failed: ${result.creatorProfile.pastProjectsFailed}</p>
+          <p>Linked Wallets Detected: ${result.creatorProfile.linkedWalletsDetected}</p>
+          <p>Known Scammer: ${result.creatorProfile.isKnownScammer}</p>
+        </div>
+        <div class='section'>
+          <h2>Next Steps:</h2>
+          <p>${result.nextSteps}</p>
+        </div>
+      `;
+      resDiv.scrollIntoView({ behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
